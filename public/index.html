@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>17H的导航站</title>
+    <title>Yukifly的导航站</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -14,13 +14,13 @@
         body { font-family: 'Inter', sans-serif; transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out; }
 
         /* UI element styles */
-        。backdrop-blur-md { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-        。modal { display: none; }
-        。modal.active { display: flex; }
-        。icon-preview { width: 32px; height: 32px; object-fit: contain; border-radius: 6px; }
+        .backdrop-blur-md { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .modal { display: none; }
+        .modal.active { display: flex; }
+        .icon-preview { width: 32px; height: 32px; object-fit: contain; border-radius: 6px; }
 
         /* Light Mode Theme */
-        。light-mode {
+        .light-mode {
             --bg-color: #f3f4f6;
             --text-color: #1f2937;
             --text-muted: #6b7280;
@@ -36,23 +36,23 @@
         }
 
         body.light-mode { background-color: var(--bg-color); color: var(--text-color); }
-        。light-mode .bg-black.bg-opacity-10 { background-color: var(--ui-bg); border-bottom: 1px solid var(--ui-border); }
-        。light-mode .bg-gray-700 { background-color: var(--input-bg); }
-        。light-mode .text-gray-400 { color: var(--text-muted); }
-        。light-mode input, .light-mode select, .light-mode textarea { color: var(--input-text); }
-        。light-mode .hover\:bg-gray-700:hover { background-color: var(--hover-bg); }
-        。light-mode .bg-gray-800 { background-color: var(--modal-bg); }
-        。light-mode .bg-gray-900 { background-color: var(--panel-bg); }
-        。light-mode .bg-black.bg-opacity-20 { background-color: var(--card-bg); }
-        。light-mode .hover\:bg-opacity-60:hover { background-color: var(--card-hover-bg); }
+        .light-mode .bg-black.bg-opacity-10 { background-color: var(--ui-bg); border-bottom: 1px solid var(--ui-border); }
+        .light-mode .bg-gray-700 { background-color: var(--input-bg); }
+        .light-mode .text-gray-400 { color: var(--text-muted); }
+        .light-mode input, .light-mode select, .light-mode textarea { color: var(--input-text); }
+        .light-mode .hover\:bg-gray-700:hover { background-color: var(--hover-bg); }
+        .light-mode .bg-gray-800 { background-color: var(--modal-bg); }
+        .light-mode .bg-gray-900 { background-color: var(--panel-bg); }
+        .light-mode .bg-black.bg-opacity-20 { background-color: var(--card-bg); }
+        .light-mode .hover\:bg-opacity-60:hover { background-color: var(--card-hover-bg); }
 
         /* Drag-and-drop styles */
-        。sortable-ghost { opacity: 0.4; background: #4a5568; }
-        。sortable-chosen { background: #2d3748; }
-        。drag-handle { cursor: grab; }
-        。drag-handle:active { cursor: grabbing; }
-        。light-mode .sortable-ghost { background: #cbd5e1; }
-        。light-mode .sortable-chosen { background: #e5e7eb; }
+        .sortable-ghost { opacity: 0.4; background: #4a5568; }
+        .sortable-chosen { background: #2d3748; }
+        .drag-handle { cursor: grab; }
+        .drag-handle:active { cursor: grabbing; }
+        .light-mode .sortable-ghost { background: #cbd5e1; }
+        .light-mode .sortable-chosen { background: #e5e7eb; }
 
         #app-container.sidebar-collapsed #sidebar { width: 0; padding-left: 0; padding-right: 0; overflow: hidden; transform: translateX(-100%); }
     </style>
