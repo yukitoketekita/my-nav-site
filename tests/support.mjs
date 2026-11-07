@@ -1,0 +1,7 @@
+import {DatabaseSync} from 'node:sqlite';
+import fs from 'node:fs';
+export class LocalD1 {
+  constructor(seed=true){this.db=new DatabaseSync(':memory:');this.db.exec('PRAGMA foreign_keys=ON');for(const name of ['0001_base.sql','0002_auth.sql'])this.db.exec(fs.readFileSync(new URL('../migrations/'+name,import.meta.url),'utf8'));if(seed)this.db.exec("INSERT INTO categories(id,name,type,displayOrder) VALUES (1,'工具','sidebar',0),(2,'阅读','topbar',1); INSERT INTO sites(id,categoryId,name,url,icon,description) VALUES(1,1,'原有链接','https://example.com','','已有描述'); INSERT INTO settings(key,value) VALUES('backgroundUrl','https://example.com/bg.png'),('privateSetting','preserve');");}
+  prepare(sql){const db=this.db;const make=args=>({sql,args,bind:(...next)=>make(next),first:async()=>db.prepare(sql).get(...args)||null,all:async()=>({results:db.prepare(sql).all(...args)}),run:async()=>{const r=db.prepare(sql).run(...args);return {success:true,meta:{last_row_id:Number(r.lastInsertRowid),changes:r.changes},results:[]};}});return make([]);}
+  async batch(statements){this.db.exec('BEGIN');try{const results=[];for(const s of statements){const stmt=this.db.prepare(s.sql);if(/^\s*(SELECT|PRAGMA)/i.test(s.sql))results.push({results:stmt.all(...s.args)});else{const r=stmt.run(...s.args);results.push({results:[],meta:{last_row_id:Number(r.lastInsertRowid),changes:r.changes}});}}this.db.exec('COMMIT');return results;}catch(e){this.db.exec('ROLLBACK');throw e;}}
+}
