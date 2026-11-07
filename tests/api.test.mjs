@@ -50,3 +50,6 @@ export async function runChecks(){
   DB.db.close();rateDB.db.close();return {passed:checks};
 }
 test('authorization, CSRF, rate limits, immediate updates and legacy data preservation',async()=>{await runChecks();});
+
+import {runEditingChecks} from './editing.mjs';
+test('link ordering, cross category moves and confirmed category deletion',async()=>{await runEditingChecks(onRequest);});

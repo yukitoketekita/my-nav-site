@@ -51,6 +51,12 @@ async function siteInput(data,env) {
   const categoryId=id(data.categoryId);if(!await env.DB.prepare('SELECT id FROM categories WHERE id = ?').bind(categoryId).first())fail(400,'分类不存在');
   return [categoryId,text(data.name,100,true),webUrl(data.url),imageValue(data.icon??''),text(data.description??'',500)];
 }
+async function orderedSites(env) {
+  const rows=(await env.DB.prepare('SELECT * FROM sites ORDER BY id').all()).results;
+  const saved=await env.DB.prepare("SELECT value FROM settings WHERE key = '_siteOrder'").first();
+  let ids=[];try{const parsed=JSON.parse(saved?.value||'[]');if(Array.isArray(parsed))ids=parsed;}catch{}
+  const ranks=new Map(ids.map((n,i)=>[n,i]));return rows.sort((a,b)=>(ranks.get(a.id)??Infinity)-(ranks.get(b.id)??Infinity)||a.id-b.id);
+}
 export async function onRequest({request,env}) {
   try {
     if(!env.DB)fail(503,'尚未绑定 D1 数据库 DB');
@@ -100,10 +106,30 @@ export async function onRequest({request,env}) {
     }
     if(path[0]==='categories'&&path.length===2&&['PUT','DELETE'].includes(method)) {
       const n=id(path[1]);if(!await env.DB.prepare('SELECT id FROM categories WHERE id = ?').bind(n).first())fail(404,'分类不存在');
-      if(method==='DELETE') { if(await env.DB.prepare('SELECT id FROM sites WHERE categoryId = ? LIMIT 1').bind(n).first())fail(409,'请先移动或删除此分类中的链接');await env.DB.prepare('DELETE FROM categories WHERE id = ?').bind(n).run(); }
+      if(method==='DELETE') {
+        const hasSites=await env.DB.prepare('SELECT id FROM sites WHERE categoryId = ? LIMIT 1').bind(n).first();
+        const confirmation=request.body?await body(request):{};
+        if(hasSites&&confirmation.deleteSites!==true)fail(409,'请确认同时删除分类中的全部网站');
+        await env.DB.batch([env.DB.prepare('DELETE FROM sites WHERE categoryId = ?').bind(n),env.DB.prepare('DELETE FROM categories WHERE id = ?').bind(n)]);
+      }
       else {const d=await body(request);if(!['sidebar','topbar'].includes(d.type))fail(400,'分类类型无效');await env.DB.prepare('UPDATE categories SET name = ?,type = ? WHERE id = ?').bind(text(d.name,60,true),d.type,n).run();}return json({success:true});
     }
-    if(route==='sites'&&method==='GET')return json((await env.DB.prepare('SELECT * FROM sites ORDER BY id').all()).results);
+    if(route==='sites'&&method==='GET')return json(await orderedSites(env));
+    if(route==='sites/move'&&method==='POST') {
+      const data=await body(request),siteId=id(data.id),categoryId=id(data.categoryId),beforeId=data.beforeId==null?null:id(data.beforeId);
+      if(!await env.DB.prepare('SELECT id FROM categories WHERE id = ?').bind(categoryId).first())fail(400,'目标分类不存在');
+      const sites=await orderedSites(env),moving=sites.find(s=>s.id===siteId);if(!moving)fail(404,'链接不存在');
+      if(beforeId===siteId)fail(400,'排序位置无效');
+      const next=sites.filter(s=>s.id!==siteId);
+      let position;
+      if(beforeId!==null){position=next.findIndex(s=>s.id===beforeId&&s.categoryId===categoryId);if(position<0)fail(409,'目标网站已变动，请刷新后重试');}
+      else {position=next.reduce((last,s,i)=>s.categoryId===categoryId?i+1:last,-1);if(position<0)position=next.length;}
+      next.splice(position,0,moving);
+      await env.DB.batch([
+        env.DB.prepare('UPDATE sites SET categoryId = ? WHERE id = ?').bind(categoryId,siteId),
+        env.DB.prepare("INSERT INTO settings (key,value) VALUES ('_siteOrder',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value").bind(JSON.stringify(next.map(s=>s.id)))
+      ]);return json({success:true});
+    }
     if(route==='sites'&&method==='POST') {const values=await siteInput(await body(request),env);const r=await env.DB.prepare('INSERT INTO sites (categoryId,name,url,icon,description) VALUES (?,?,?,?,?)').bind(...values).run();return json({id:r.meta.last_row_id},201);}
     if(path[0]==='sites'&&path.length===2&&['PUT','DELETE'].includes(method)) {
       const n=id(path[1]);if(!await env.DB.prepare('SELECT id FROM sites WHERE id = ?').bind(n).first())fail(404,'链接不存在');
