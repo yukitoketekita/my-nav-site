@@ -1,0 +1,12 @@
+{
+  "name": "my-nav-site-local",
+  "compatibility_date": "2026-11-07",
+  "pages_build_output_dir": "./public",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "nav-local",
+      "database_id": "00000000-0000-0000-0000-000000000000"
+    }
+  ]
+}

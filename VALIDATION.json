@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-07",
+  "baseCommit": "82a96cbf245887af956a3486c9bbb3aeaa3a19d0",
+  "apiAssertionsPassed": 57,
+  "apiEnvironment": "Node.js SQLite with D1 interface adapter; not live Cloudflare D1",
+  "frontendModule": "loaded and exercised in browser",
+  "browserChecks": [
+    "desktop layout",
+    "390px mobile layout",
+    "320px narrow layout without horizontal page overflow",
+    "server login and session retained on refresh",
+    "inline name and image URL update without logout",
+    "mobile link icon upload and immediate save",
+    "site favicon upload and link version update",
+    "search",
+    "nonempty category deletion disabled",
+    "logout",
+    "light and dark themes"
+  ],
+  "productionChanged": false,
+  "cloudflareDeploymentVerified": false,
+  "originalGifGitBlob": "a4ccb4dceee21754da9e46bfa6fc7395a923d2d9"
+}
