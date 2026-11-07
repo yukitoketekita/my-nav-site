@@ -1,30 +1,16 @@
 <!doctype html>
 <html lang="zh-CN">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="收藏常用网站，快速找到下一站。"><meta name="color-scheme" content="light dark">
-<title>Yukifly 导航</title><link id="favicon" rel="icon" href="/favicon"><link rel="stylesheet" href="/styles.css"><script src="/app.js" type="module"></script>
-</head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="description" content="Yukifly 导航"><meta name="color-scheme" content="light dark"><title>Yukifly 导航</title><link id="favicon" rel="icon" href="/favicon"><link rel="stylesheet" href="/styles.css"><script src="/app.js" type="module"></script></head>
 <body>
 <a class="skip-link" href="#main">跳至网站列表</a>
+<button id="menu-overlay" class="menu-overlay" type="button" aria-label="关闭分类菜单" hidden></button>
 <div class="app-shell">
-<aside class="sidebar" aria-label="网站分类">
-<a class="brand" href="/" aria-label="导航首页"><span class="brand-mark">Y<span>↗</span></span><span><strong id="brand-title">Yukifly 导航</strong><small>YOUR DAILY SHORTCUT</small></span></a>
-<div class="nav-label">我的导航 <span id="sidebar-count">—</span></div>
-<nav id="categories" class="category-nav" aria-label="分类筛选"></nav>
-<div class="sidebar-bottom"><div class="quiet-note"><span class="status-dot"></span>把时间留给更重要的事</div><button class="sidebar-admin" id="admin-button" type="button"><span>⚙</span><span id="admin-label">管理导航</span><span class="key-hint">↗</span></button></div>
-</aside>
+<aside id="sidebar" class="sidebar" aria-label="网站分类"><h1 id="navigation-title">导航菜单</h1><button id="drawer-close" class="icon-button drawer-close" type="button" aria-label="关闭分类菜单">×</button><nav id="categories" class="category-nav" aria-label="分类筛选"></nav></aside>
 <div class="main-wrap">
-<header class="topbar"><a class="mobile-brand" href="/">Yukifly <span>↗</span></a><div class="breadcrumb">工作台 <span>/</span> <strong id="breadcrumb-current">全部网站</strong></div><div class="header-actions"><span id="admin-badge" class="admin-badge" hidden>编辑模式</span><button class="icon-button" id="theme-button" aria-label="切换深浅主题" title="切换深浅主题" type="button">◐</button><button class="button small" id="mobile-admin" type="button">管理</button></div></header>
-<main id="main" tabindex="-1">
-<section class="hero"><div class="eyebrow"><span class="line"></span> A LITTLE SPACE, FOR YOUR INTERNET</div><h1>常用网站，<span>一处直达。</span></h1><p id="site-description">收藏值得留下的网站，让每一次出发都更简单。</p><form id="search-form" role="search" class="search-box"><span class="search-icon" aria-hidden="true"></span><input id="search" type="search" placeholder="搜索名称、网址或描述…" aria-label="搜索网站" autocomplete="off"><kbd>/</kbd></form><div class="hero-meta"><span id="total-count">正在连接你的导航…</span><span class="meta-dot">·</span><span>少一点寻找，多一点专注</span></div></section>
-<nav id="mobile-categories" class="mobile-categories" aria-label="手机分类筛选"></nav>
-<section id="edit-toolbar" class="edit-toolbar" hidden aria-label="管理员工具"><div><span class="status-dot"></span><strong>正在编辑导航</strong><span class="toolbar-hint">点击卡片上的编辑按钮即可修改</span></div><div class="toolbar-actions"><button class="button primary small" id="add-site" type="button">＋ 添加链接</button><button class="button small" id="manage-categories" type="button">分类</button><button class="button small" id="settings-button" type="button">站点设置</button><button class="button small" id="export-button" type="button">备份</button><button class="text-button" id="logout-button" type="button">退出</button></div></section>
-<section class="collection"><div class="section-heading"><div><h2 id="collection-title">全部网站</h2><span id="result-count" class="count-pill">—</span></div><span class="section-caption" id="collection-caption">你的互联网，从这里开始</span></div><div id="load-state" class="empty-state" role="status"><span class="empty-symbol">↗</span><h3>正在加载导航</h3><p>马上就好。</p></div><div id="site-groups"></div></section>
-<footer><span id="footer-title">Yukifly 导航</span><span>好用的，都在这里。 <span class="footer-arrow">↗</span></span></footer>
-</main>
-</div>
-</div>
-<dialog id="editor-dialog" aria-labelledby="dialog-title"><div class="dialog-head"><div><span class="eyebrow">YOUR NAVIGATION</span><h2 id="dialog-title">管理导航</h2></div><button class="icon-button" type="button" id="dialog-close" aria-label="关闭弹窗">×</button></div><div id="dialog-content"></div></dialog>
-<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<header class="topbar"><div class="header-left"><button id="sidebar-toggle" class="icon-button" type="button" aria-label="切换分类菜单" aria-controls="sidebar" aria-expanded="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18m7-14-4 5 4 5"/></svg></button><form id="search-form" role="search" class="search-box"><input id="search" type="search" placeholder="搜索网站…" aria-label="搜索网站" autocomplete="off"><span class="search-icon" aria-hidden="true"></span></form></div><nav id="topbar-categories" class="topbar-categories" aria-label="快捷分类"></nav><div class="header-actions"><span id="admin-badge" class="admin-badge" hidden>编辑模式</span><button id="theme-button" class="icon-button" type="button" aria-label="切换深浅主题" title="切换深浅主题"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.9 13a9 9 0 0 1-9.9-9.9A9 9 0 1 0 20.9 13Z"/></svg></button><button id="language-button" class="language-button" type="button" aria-label="切换中英文">EN / 中</button><button id="admin-button" class="icon-button" type="button" aria-label="管理导航" title="管理导航"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 3-1 3-3 1-2 3 2 2-1 3 2 3 3-1 2 2h3l1-3 3-1 2-3-2-2 1-3-2-3-3 1-2-2Z"/><circle cx="11.5" cy="11" r="3"/></svg></button></div></header>
+<main id="main" tabindex="-1"><nav id="mobile-categories" class="mobile-categories" aria-label="手机分类筛选"></nav>
+<section id="edit-toolbar" class="edit-toolbar" hidden aria-label="管理员工具"><div class="toolbar-actions"><button class="button primary small" id="add-site" type="button">＋ 添加链接</button><button class="button small" id="manage-categories" type="button">分类</button><button class="button small" id="settings-button" type="button">站点设置</button><button class="button small" id="export-button" type="button">备份</button><button class="text-button" id="logout-button" type="button">退出</button></div></section>
+<section class="collection"><h2 id="search-heading" class="search-heading" hidden>搜索结果</h2><div id="load-state" class="empty-state" role="status"><p>正在加载…</p></div><div id="site-groups"></div></section>
+</main></div></div>
+<dialog id="editor-dialog" aria-labelledby="dialog-title"><div class="dialog-head"><h2 id="dialog-title">管理导航</h2><button class="icon-button" type="button" id="dialog-close" aria-label="关闭弹窗">×</button></div><div id="dialog-content"></div></dialog><div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 </body></html>
