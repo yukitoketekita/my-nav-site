@@ -17,7 +17,24 @@
     "logout",
     "light and dark themes"
   ],
-  "productionChanged": false,
-  "cloudflareDeploymentVerified": false,
-  "originalGifGitBlob": "a4ccb4dceee21754da9e46bfa6fc7395a923d2d9"
+  "productionChanged": true,
+  "cloudflareDeploymentVerified": true,
+  "originalGifGitBlob": "a4ccb4dceee21754da9e46bfa6fc7395a923d2d9",
+  "productionUrl": "https://pages.yukifly.com/",
+  "productionDataVerified": {
+    "categories": 14,
+    "sites": 50,
+    "settings": 1,
+    "exactMatch": true
+  },
+  "productionSecurity": {
+    "unauthenticatedWrite": 401,
+    "crossOriginWrite": 403,
+    "unauthenticatedExport": 401,
+    "apiCacheControl": "no-store, max-age=0",
+    "historicalDeploymentsProtectedByAccess": true,
+    "historicalDeploymentUnauthenticatedRequests": 302,
+    "accessAllowsOwnerEmailOnly": true
+  },
+  "productionSuccessfulAdminLoginVerified": false
 }
